@@ -1,3 +1,3 @@
 <?
-echo "First commit";
+echo "First commit WEB HOOK";
 ?>
