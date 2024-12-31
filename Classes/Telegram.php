@@ -47,11 +47,11 @@ class Telegram
                     return;
                 }
             }
+            $this->sendMessage("Я тебя не понял:(");
         }
     }
 
     //Telegram Методы
-
     private function sendTelegram($method, $response)
     {
         $ch = curl_init('https://api.telegram.org/bot' . $this->botApiKey . '/' . $method);
