@@ -11,12 +11,12 @@ require_once 'Classes/Command.php';
 
 //Команды
 require_once 'Commands/StartCommand.php';
+require_once 'Commands/HelpCommand.php';
 
 $telegram = new Telegram(BOT_API_KEY);
 
-$startCommand = new StartCommand($telegram, "/start");
-
-$telegram->addCommand($startCommand);
+$telegram->addCommand(new StartCommand($telegram, "/start"));
+$telegram->addCommand(new HelpCommand($telegram, "/help"));
 
 $telegram->run();
 ?>
