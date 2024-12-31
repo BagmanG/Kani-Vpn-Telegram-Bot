@@ -6,8 +6,7 @@ class StartCommand extends Command {
     }
 
     public function run() {
-        echo "Start command executed at path: " . $this->getPath() . "\n";
-        $this->telegram->sendMessage("Привет");
+        $this->telegram->sendMessage("Привет,мир!");
     }
 }
 ?>
