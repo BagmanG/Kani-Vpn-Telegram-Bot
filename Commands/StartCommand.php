@@ -6,7 +6,7 @@ class StartCommand extends Command {
     }
 
     public function run() {
-        $this->telegram->sendMessage("Привет,мир!");
+        $this->telegram->sendMessage("Привет,мир!!!");
     }
 }
 ?>
