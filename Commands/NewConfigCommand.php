@@ -12,7 +12,7 @@ class NewConfigCommand extends Command {
                 ['text' => $server['name'], 'callback_data' => 'server_' . $server['id']],
             ];
         }
-        Telegram::sendInlineMessage("Выберите страну для VPN:",$inlineKeyboard);
+        Telegram::sendInlineMessage("Выберите страну для VPN: ".count($servers),$inlineKeyboard);
     } 
 } 
 ?> 
