@@ -1,19 +1,16 @@
 <?php
-
 class Core
 {
-    private $env;
+    private static $env;
     private const ENV_FILE_PATH = __DIR__ . '/../.env';
 
-    public function __construct()
+    public static function Init()
     {
-        $this->env = new Environment(self::ENV_FILE_PATH);
-    }
-
-    public function Init()
-    {
+        if (self::$env === null) {
+            self::$env = new Environment(self::ENV_FILE_PATH);
+        }
         try {
-            $this->env->Load();
+            self::$env->Load();
         } catch (Exception $e) {
             die("Ошибка: " . $e->getMessage());
         }

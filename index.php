@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'autoload.php';
 
-$core = new Core();
-$core->Init();
+Core::Init();
 
 $telegram = new Telegram($_ENV['TG_BOT_API']);
 
