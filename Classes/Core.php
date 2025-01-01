@@ -11,8 +11,14 @@ class Core
         }
         try {
             self::$env->Load();
+            Database::connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
         } catch (Exception $e) {
             die("Ошибка: " . $e->getMessage());
         }
+    }
+
+    public static function Close(){
+        Database::close();
+        self::$env = null;
     }
 }

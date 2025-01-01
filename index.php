@@ -14,4 +14,6 @@ $telegram->addCommand(new HelpCommand($telegram, "/help"));
 $telegram->addCommand(new TestCommand($telegram, "/test"));
 
 $telegram->run();
+
+Core::Close();
 ?>
