@@ -2,59 +2,58 @@
 
 class Telegram
 {
-    private $botApiKey;
-    private $commands = [];
-    private $data;
-    public function __construct($botApiKey)
+    private static $botApiKey;
+    private static $commands = [];
+    private static $data;
+
+    public static function init($botApiKey)
     {
         if (empty($botApiKey)) {
             throw new InvalidArgumentException("API_KEY is required.");
         }
-        $this->botApiKey = $botApiKey;
+        self::$botApiKey = $botApiKey; 
     }
 
-    public function getApiKey(): string
+    public static function getApiKey(): string
     {
-        return $this->botApiKey;
+        return self::$botApiKey;
     }
 
-    public function addCommand(Command $command)
+    public static function addCommand(Command $command)
     {
-        $this->commands[] = $command;
+        self::$commands[] = $command;
     }
 
-    //Test
-    public function runCommands()
+    public static function runCommands()
     {
-        foreach ($this->commands as $command) {
-            $command->Run();
+        foreach (self::$commands as $command) {
+            $command->run();
         }
     }
 
-    public function run()
+    public static function run()
     {
-        $this->data = file_get_contents('php://input');
-        $this->data = json_decode($this->data, true);
+        self::$data = file_get_contents('php://input');
+        self::$data = json_decode(self::$data, true);
 
-        if (empty($this->data['message']['chat']['id'])) {
+        if (empty(self::$data['message']['chat']['id'])) {
             exit();
         }
-        if (!empty($this->data['message']['text'])) {
-            $text = $this->data['message']['text'];
-            foreach ($this->commands as $command) {
+        if (!empty(self::$data['message']['text'])) {
+            $text = self::$data['message']['text'];
+            foreach (self::$commands as $command) {
                 if ($command->getPath() == $text) {
                     $command->run();
                     return;
                 }
             }
-            $this->sendMessage("Я тебя не понял:(");
+            self::sendMessage("Я тебя не понял:(");
         }
     }
 
-    //Telegram Методы
-    private function sendTelegram($method, $response)
+    private static function sendTelegram($method, $response)
     {
-        $ch = curl_init('https://api.telegram.org/bot' . $this->botApiKey . '/' . $method);
+        $ch = curl_init('https://api.telegram.org/bot' . self::$botApiKey . '/' . $method);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -65,22 +64,25 @@ class Telegram
         return $res;
     }
 
-    public function sendMessage($message)
+    public static function sendMessage($message)
     {
-        $this->sendTelegram(
-			'sendMessage', 
-			array(
-				'chat_id' => $this->data['message']['chat']['id'],
-				'text' => $message,
-			)
-		);
+        self::sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => self::$data['message']['chat']['id'],
+                'text' => $message,
+            )
+        );
     }
 
-    public function getUserId():string{
-        return $this->data['message']['from']['id'];
+    public static function getUserId(): string
+    {
+        return self::$data['message']['from']['id'];
     }
 
-    public function getUserNickname ():string{
-        return isset($this->data['message']['from']['username']) ? $this->data['message']['from']['username'] : null;
+    public static function getUserNickname(): string
+    {
+        return isset(self::$data['message']['from']['username']) ? self::$data['message']['from']['username'] : null;
     }
 }
+?>
