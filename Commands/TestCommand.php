@@ -7,6 +7,6 @@ class TestCommand extends Command {
     public function run() { 
         DatabaseEventer::OnRegisterNewUser();
         Telegram::sendMessage("Test : ");
-    } 
-} 
+    }
+}
 ?> 
