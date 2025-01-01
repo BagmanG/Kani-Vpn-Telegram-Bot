@@ -8,8 +8,6 @@ require_once 'autoload.php';
 $core = new Core();
 $core->Init();
 
-echo $_ENV['TG_BOT_API'];
-exit();
 $telegram = new Telegram($_ENV['TG_BOT_API']);
 
 $telegram->addCommand(new StartCommand($telegram, "/start"));
