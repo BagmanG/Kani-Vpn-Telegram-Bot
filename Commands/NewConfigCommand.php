@@ -5,14 +5,14 @@ class NewConfigCommand extends Command {
     } 
  
     public function run() { 
-        $servers = Database::fetchAll('SELECT id, name FROM servers WHERE 1');
+        $servers = Database::fetchAll('SELECT id, name FROM servers WHERE visible = 1');
         $inlineKeyboard = [];
         foreach ($servers as $server) {
             $inlineKeyboard['inline_keyboard'][] = [
                 ['text' => $server['name'], 'callback_data' => 'server_' . $server['id']],
             ];
         }
-        Telegram::sendInlineMessage("Выберите страну для VPN: ".count($servers),$inlineKeyboard);
+        Telegram::sendInlineMessage("Выберите страну для VPN:",$inlineKeyboard);
     } 
 } 
 ?> 
