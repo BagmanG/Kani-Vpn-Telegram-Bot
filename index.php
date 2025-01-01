@@ -9,9 +9,9 @@ Core::Init();
 
 Telegram::init($_ENV['TG_BOT_API']);
 
-Telegram::addCommand(new StartCommand($telegram, "/start"));
-Telegram::addCommand(new HelpCommand($telegram, "/help"));
-Telegram::addCommand(new TestCommand($telegram, "/test"));
+Telegram::addCommand(new StartCommand("/start"));
+Telegram::addCommand(new HelpCommand("/help"));
+Telegram::addCommand(new TestCommand("/test"));
 
 Telegram::run();
 
