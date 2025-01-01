@@ -7,13 +7,13 @@ require_once 'autoload.php';
 
 Core::Init();
 
-$telegram = new Telegram($_ENV['TG_BOT_API']);
+Telegram::init($_ENV['TG_BOT_API']);
 
-$telegram->addCommand(new StartCommand($telegram, "/start"));
-$telegram->addCommand(new HelpCommand($telegram, "/help"));
-$telegram->addCommand(new TestCommand($telegram, "/test"));
+Telegram::addCommand(new StartCommand($telegram, "/start"));
+Telegram::addCommand(new HelpCommand($telegram, "/help"));
+Telegram::addCommand(new TestCommand($telegram, "/test"));
 
-$telegram->run();
+Telegram::run();
 
 Core::Close();
 ?>
