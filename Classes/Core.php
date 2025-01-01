@@ -3,7 +3,7 @@
 class Core
 {
     private $env;
-    private const ENV_FILE_PATH = './'.__DIR__ . '/.env';
+    private const ENV_FILE_PATH = __DIR__ . '/../.env';
 
     public function __construct()
     {
