@@ -11,7 +11,7 @@ class Telegram
         if (empty($botApiKey)) {
             throw new InvalidArgumentException("API_KEY is required.");
         }
-        self::$botApiKey = $botApiKey; 
+        self::$botApiKey = $botApiKey;
     }
 
     public static function getApiKey(): string
@@ -67,10 +67,22 @@ class Telegram
     public static function sendMessage($message)
     {
         self::sendTelegram(
-            'sendMessage', 
+            'sendMessage',
             array(
                 'chat_id' => self::$data['message']['chat']['id'],
                 'text' => $message,
+            )
+        );
+    }
+
+    public static function sendInlineMessage($message,$inlineKeyboard)
+    {
+        self::sendTelegram(
+            'sendMessage',
+            array(
+                'chat_id' => self::$data['message']['chat']['id'],
+                'text' => $message,
+                'reply_markup' => json_encode($inlineKeyboard),
             )
         );
     }
