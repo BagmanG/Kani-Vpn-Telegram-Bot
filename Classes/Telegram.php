@@ -35,7 +35,7 @@ class Telegram
     {
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
-        self::sendMessage(self::$data);
+        self::sendMessage(print_r(self::$data, true));
         if (isset(self::$data['callback_query'])) {
             $callbackQuery = self::$data['callback_query'];
             $chatId = $callbackQuery['message']['chat']['id'];
