@@ -1,7 +1,6 @@
 <?php 
 class TestCommand extends Command { 
-    public function __construct(Telegram $telegram, string $path) { 
-        parent::__construct($telegram); 
+    public function __construct(string $path) { 
         $this->setPath($path); 
     } 
  

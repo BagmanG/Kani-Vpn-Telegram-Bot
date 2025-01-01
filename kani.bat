@@ -22,8 +22,7 @@ if not exist "Commands" (
 
 echo ^<?php > "!fileName!"
 echo class %commandName%Command extends Command { >> "!fileName!"
-echo     public function __construct(Telegram ^$telegram, string ^$path) { >> "!fileName!"
-echo         parent::__construct(^$telegram); >> "!fileName!"
+echo     public function __construct(string ^$path) { >> "!fileName!"
 echo         ^$this-^>setPath(^$path); >> "!fileName!"
 echo     } >> "!fileName!"
 echo. >> "!fileName!"
