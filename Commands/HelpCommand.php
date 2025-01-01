@@ -6,7 +6,7 @@ class HelpCommand extends Command {
     } 
  
     public function run() { 
-        $this->telegram->sendMessage("Чем тебе помочь?");
+        $this->telegram->sendMessage("Чем тебе помочь? ".$_ENV['DB_HOST']);
     } 
 } 
 ?> 
