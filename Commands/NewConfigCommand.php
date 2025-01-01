@@ -5,7 +5,7 @@ class NewConfigCommand extends Command {
     } 
  
     public function run() { 
-        $servers = Database::fetchAll("SELECT id,name WHERE 1");
+        $servers = Database::fetchAll('SELECT id, name FROM servers WHERE 1');
         $inlineKeyboard = [];
         foreach ($servers as $server) {
             $inlineKeyboard['inline_keyboard'][] = [
