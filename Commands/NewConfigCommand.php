@@ -5,18 +5,12 @@ class NewConfigCommand extends Command {
     } 
  
     public function run() { 
-        $inlineKeyboard = [
-            'inline_keyboard' => [
-                [
-                    ['text' => 'Создать конфигурацию', 'callback_data' => 'create_config'],
-                    ['text' => 'Помощь', 'callback_data' => 'help'],
-                ],
-                [
-                    ['text' => 'Настройки', 'callback_data' => 'settings'],
-                    ['text' => 'О нас', 'callback_data' => 'about'],
-                ],
-            ],
-        ];
+        $servers = Database::fetchAll("SELECT id,name WHERE 1");
+        foreach ($servers as $server) {
+            $inlineKeyboard['inline_keyboard'][] = [
+                ['text' => $server['name'], 'callback_data' => 'server_' . $server['id']],
+            ];
+        }
         Telegram::sendInlineMessage("Выберите страну для VPN:",$inlineKeyboard);
     } 
 } 
