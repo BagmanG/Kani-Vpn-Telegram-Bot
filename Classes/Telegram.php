@@ -75,4 +75,12 @@ class Telegram
 			)
 		);
     }
+
+    public function getUserId():string{
+        return $this->data['message']['from']['id'];
+    }
+
+    public function getUserNickname ():string{
+        return isset($this->data['message']['from']['username']) ? $this->data['message']['from']['username'] : null;
+    }
 }
