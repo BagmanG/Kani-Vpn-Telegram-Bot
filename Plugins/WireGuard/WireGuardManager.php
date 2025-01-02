@@ -5,7 +5,9 @@ class WireGuardManager{
 
         $api = new WireGuardAPI('http://'.$server['ip'].':'.$server['port'], $server['api_key']);
         $json = $api->createClient();
-        Telegram::sendMessageFromCallback($json);
+        $data = json_decode($json, true);
+        $configId = $data['id'];
+        Telegram::sendMessageFromCallback($json."____".$configId);
     }
 }
 ?>
