@@ -95,11 +95,11 @@ class Telegram
         self::sendTelegram('sendPhoto', $data);
     }
 
-    public static function sendDocument($filePath, $caption = null)
+    public static function sendConfig($filePath, $caption = null)
     {
         $data = array(
             'chat_id' => self::getChatId(),
-            'document' => curl_file_create($filePath, 'image/jpg' , 'cat.jpg'),
+            'document' => curl_file_create($filePath, 'text/plain' , 'vpn.conf'),
         );
         if ($caption) {
             $data['caption'] = $caption;
