@@ -35,14 +35,16 @@ class Telegram
     {
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
+
+        //Если каллбек, то парсим
         if (isset(self::$data['callback_query'])) {
-            $callbackQuery = self::$data['callback_query'];
-            $callbackData = $callbackQuery['data'];
-            self::sendMessageFromCallback("Выбран ".$callbackData);
+            self::tryParseCallback(self::$data['callback_query']['data']);
+            return;
         }
         if (empty(self::$data['message']['chat']['id'])) {
             exit();
         }
+        //Если сообщение, то обрабатываем
         if (!empty(self::$data['message']['text'])) {
             $text = self::$data['message']['text'];
             foreach (self::$commands as $command) {
@@ -110,6 +112,10 @@ class Telegram
     public static function getUserNickname(): string
     {
         return isset(self::$data['message']['from']['username']) ? self::$data['message']['from']['username'] : null;
+    }
+
+    public static function tryParseCallback($callbackData){
+        self::sendMessageFromCallback($callbackData);
     }
 }
 ?>

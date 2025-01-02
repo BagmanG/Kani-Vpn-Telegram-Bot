@@ -2,6 +2,7 @@
 $directories = [
     __DIR__ . '/Classes', // Классы
     __DIR__ . '/Commands', // Команды
+    __DIR__ . '/Plugins/WireGuard', // WireGuardAPI
 ];
 
 spl_autoload_register(function ($class_name) use ($directories) {
