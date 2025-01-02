@@ -8,7 +8,7 @@ class HelpCommand extends Command
 
     public function run()
     {
-        Telegram::sendMessage("Чем тебе помочь? " . $_ENV['DB_HOST']);
+        Telegram::sendMessage("В разработке.");
     }
 } 
 ?>

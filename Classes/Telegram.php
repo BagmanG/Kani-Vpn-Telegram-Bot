@@ -35,7 +35,8 @@ class Telegram
     {
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
-
+        $dataText = print_r(self::$data, true);
+        Telegram::sendMessage($dataText);
         //Если каллбек, то парсим
         if (isset(self::$data['callback_query'])) {
             Logger::Rec(self::$data);
