@@ -155,7 +155,7 @@ class Telegram
     }
 
     public static function getUserState(){
-        return Database::fetch("SELECT state FROM users WHERE id = ".self::getUserId())['state'];
+        return Database::fetch("SELECT state FROM users WHERE userId = ".self::getUserId())['state'];
     }
 
     public static function tryParseCallback($callbackData)
