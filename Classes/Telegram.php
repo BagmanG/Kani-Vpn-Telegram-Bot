@@ -142,6 +142,7 @@ class Telegram
         if (strpos($callbackData, 'new_config_') !== false) {
             preg_match('/new_config_(\d+)/', $callbackData, $matches);
             if (isset($matches[1])) {
+                self::sendMessage(self::getUserId());
                 //WireGuardManager::CreateNewConfig($matches[1]);
                 return;
             }
