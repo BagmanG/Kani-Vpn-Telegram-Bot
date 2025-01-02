@@ -36,7 +36,7 @@ class Telegram
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
         $dataText = print_r(self::$data, true);
-        Telegram::sendMessage($dataText);
+        //Telegram::sendMessage($dataText);
 
         if(isset(self::$data['message']['chat']['id'])){
             //Если это беседа админов
