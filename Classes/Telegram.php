@@ -106,7 +106,7 @@ class Telegram
 
     public static function getUserId(): string
     {
-        return isset(self::$data['message']['from']['id']) ? self::$data['message']['from']['id'] : self::$data['callback_query']['message']['chat']['id'];
+        return self::$data['message']['from']['id'];
     }
 
     public static function getUserNickname(): string

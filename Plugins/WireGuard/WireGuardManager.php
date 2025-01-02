@@ -24,7 +24,7 @@ class WireGuardManager
         $configId = $configData['configId'];
         $serverId = $configId['serverId'];
         $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
-        Telegram::sendMessageFromCallback(__DIR__."../");
+        Telegram::sendMessage(__DIR__."../");
     }
 }
 ?>
