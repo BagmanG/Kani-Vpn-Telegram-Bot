@@ -79,6 +79,7 @@ class Telegram
             if(self::getUserState() == "support"){
                 self::sendMessage("Ваш вопрос отправлен в поддержку. Ожидайте ответа.");
                 self::sendToSupportChat(self::getUserId()."\n\n$text");
+                DatabaseEventer::ResetUserState();
             }
         }
     }
