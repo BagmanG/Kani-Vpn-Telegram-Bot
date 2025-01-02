@@ -40,7 +40,7 @@ class Telegram
 
         if(isset(self::$data['message']['chat']['id'])){
             //Если это беседа админов
-            if(self::$data['message']['chat']['id']==-1002176982830){
+            if(self::$data['message']['chat']['id']==$_ENV['SUPPORT_CHAT_ID']){
                 if(isset(self::$data['message']['reply_to_message'])){
                     $question = self::$data['message']['reply_to_message']['text'];
                     $answer = self::$data['message']['text'];
@@ -68,7 +68,13 @@ class Telegram
                     return;
                 }
             }
-            self::sendMessage("Я тебя не понял:(");
+            if(self::getUserState() == "none"){
+                self::sendMessage("Я тебя не понял:(");
+            }
+            if(self::getUserState() == "support"){
+                self::sendMessage("Ваш вопрос отправлен в поддержку. Ожидайте ответа.");
+                self::sendToSupportChat(self::getUserId()."\n\n$text");
+            }
         }
     }
 
@@ -150,6 +156,10 @@ class Telegram
         return isset(self::$data['message']['chat']['id']) ? self::$data['message']['chat']['id'] : self::$data['callback_query']['message']['chat']['id'];
     }
 
+    public static function getUserState(){
+        return Database::fetch("SELECT state FROM users WHERE id = ".self::getUserId());
+    }
+
     public static function tryParseCallback($callbackData)
     {
         //Если каллбек на создание конфига
@@ -160,6 +170,16 @@ class Telegram
                 return;
             }
         }
+    }
+
+    public static function sendToSupportChat($message){
+        self::sendTelegram(
+            'sendMessage',
+            array(
+                'chat_id' => $_ENV['SUPPORT_CHAT_ID'],
+                'text' => $message,
+            )
+        );
     }
 }
 ?>

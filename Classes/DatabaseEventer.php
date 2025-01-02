@@ -19,5 +19,14 @@ class DatabaseEventer
         $stmt->bind_param('ssss', $userId, $username, $registered, $userId);
         $stmt->execute();
     }
+
+    public static function OnChangeUserState($state){
+        $userId = Telegram::getUserId();
+        Database::execute("UPDATE users SET state = $state WHERE userId = $userId");
+    }
+
+    public static function ResetUserState(){
+        self::OnChangeUserState("none");
+    }
 } 
 ?>

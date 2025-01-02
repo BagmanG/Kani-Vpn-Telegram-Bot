@@ -5,6 +5,7 @@ class ConfigsListCommand extends Command {
     } 
  
     public function run() { 
+        DatabaseEventer::ResetUserState();
         Telegram::sendMessage("Вот список ваших конфигураций:");
     } 
 } 

@@ -5,6 +5,7 @@ class NewConfigCommand extends Command {
     } 
  
     public function run() { 
+        DatabaseEventer::ResetUserState();
         $servers = Database::fetchAll('SELECT id, name FROM servers WHERE visible = 1');
         $inlineKeyboard = [];
         foreach ($servers as $server) {

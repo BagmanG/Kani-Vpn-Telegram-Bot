@@ -8,7 +8,8 @@ class HelpCommand extends Command
 
     public function run()
     {
-        Telegram::sendMessage("В разработке.");
+        DatabaseEventer::OnChangeUserState("support");
+        Telegram::sendMessage("Если у вас возникли вопросы, вы можете задать их здесь. В ближайшее время мы вам ответим!");
     }
 } 
 ?>
