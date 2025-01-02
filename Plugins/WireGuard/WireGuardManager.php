@@ -12,7 +12,6 @@ class WireGuardManager{
         $configId = 4;
         $userId = Telegram::getUserId();
         $createdDate = date('Y-m-d H:i:s');
-        $serverId = $server['id'];
         Database::execute("INSERT INTO `configs`(`id`, `userId`, `serverId`, `created_date`, `configId`) VALUES (0,'$userId',$serverId,'$createdDate',$configId)")
     }
 }
