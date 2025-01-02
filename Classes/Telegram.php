@@ -75,19 +75,20 @@ class Telegram
         self::sendTelegram(
             'sendMessage',
             array(
-                'chat_id' => self::$data['message']['chat']['id'],
+                'chat_id' => self::getChatId(),
                 'text' => $message,
             )
         );
     }
 
-    public static function sendMessageFromCallback($message)
+    public static function sendPhotoWithCaption($photoUrl, $caption)
     {
         self::sendTelegram(
-            'sendMessage',
+            'sendPhoto',
             array(
-                'chat_id' => self::$data['callback_query']['message']['chat']['id'],
-                'text' => $message,
+                'chat_id' => self::getChatId(),
+                'photo' => $photoUrl,
+                'caption' => $caption,
             )
         );
     }
@@ -114,13 +115,18 @@ class Telegram
         return isset(self::$data['message']['from']['username']) ? self::$data['message']['from']['username'] : null;
     }
 
+    public static function getChatId():string{
+        return isset(self::$data['message']['chat']['id']) ? self::$data['message']['chat']['id'] : self::$data['callback_query']['message']['chat']['id'];
+    }
+
     public static function tryParseCallback($callbackData)
     {
         //Если каллбек на создание конфига
         if (strpos($callbackData, 'new_config_') !== false) {
             preg_match('/new_config_(\d+)/', $callbackData, $matches);
             if (isset($matches[1])) {
-                WireGuardManager::CreateNewConfig($matches[1]);
+                self::sendMessage("Test");
+                //WireGuardManager::CreateNewConfig($matches[1]);
                 return;
             }
         }

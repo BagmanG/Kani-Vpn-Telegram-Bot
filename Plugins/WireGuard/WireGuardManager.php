@@ -25,7 +25,7 @@ class WireGuardManager
         $serverId = $configData['serverId'];
         $serverData = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
         $imageUrl = $_ENV['SERVER_ROOT']."Plugins/WireGuard/WireGuardQr.php?server_port=".$serverData['ip'].":".$serverData['port']."&token=".$serverData['api_key']."&id=".$configId;
-        Telegram::sendMessage($imageUrl);
+        Telegram::sendPhotoWithCaption($imageUrl,"Вы успешно создали конфигурацию.");
     }
 }
 ?>
