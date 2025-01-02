@@ -23,8 +23,8 @@ class WireGuardManager
         $configData = Database::fetch("SELECT serverId,configId FROM configs WHERE id = $configIndex");
         $configId = $configData['configId'];
         $serverId = $configData['serverId'];
-        $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
-        $imageUrl = $_ENV['SERVER_ROOT']."Plugins/WireGuard/WireGuardQr.php?url=".$server['ip'].":".$server['port']."&token=".$server['api_key']."&id=".$configId;
+        $serverData = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
+        $imageUrl = $_ENV['SERVER_ROOT']."Plugins/WireGuard/WireGuardQr.php?server_port=".$serverData['ip'].":".$serverData['port']."&token=".$serverData['api_key']."&id=".$configId;
         Telegram::sendMessage($imageUrl);
     }
 }
