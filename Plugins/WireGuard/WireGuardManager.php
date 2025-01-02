@@ -1,6 +1,8 @@
 <?
-class WireGuardManager{
-    public static function CreateNewConfig($serverId){
+class WireGuardManager
+{
+    public static function CreateNewConfig($serverId)
+    {
         $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
 
         /*$api = new WireGuardAPI('http://'.$server['ip'].':'.$server['port'], $server['api_key']);
@@ -13,6 +15,16 @@ class WireGuardManager{
         $userId = Telegram::getUserId();
         $createdDate = date('Y-m-d H:i:s');
         Database::execute("INSERT INTO `configs`(`id`, `userId`, `serverId`, `created_date`, `configId`) VALUES (0,'$userId',$serverId,'$createdDate',$configId)");
+    }
+
+    public static function GetConfigQrCode()
+    {
+        $configIndex = 1;
+        $configData = Database::fetch("SELECT serverId,configId FROM configs WHERE id = $configIndex");
+        $configId = $configData['configId'];
+        $serverId = $configId['serverId'];
+        $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
+        Telegram::sendMessageFromCallback(__DIR__."../");
     }
 }
 ?>
