@@ -18,6 +18,12 @@ class Database {
         return self::$connection->query($sql);
     }
 
+    //Получить id автоинкремента
+    public static function queryWithIndex($sql) {
+        self::$connection->query($sql);
+        return self::$connection->insert_id;
+    }
+
     public static function fetchAll($sql) {
         $result = self::query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];

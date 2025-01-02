@@ -5,9 +5,7 @@ class TestCommand extends Command {
     } 
  
     public function run() { 
-        //DatabaseEventer::OnRegisterNewUser();
-        //Telegram::sendMessage("Test : ");
-        WireGuardManager::GetConfigFile();
+        Telegram::sendMessage("Test : ");
     }
 }
 ?> 
