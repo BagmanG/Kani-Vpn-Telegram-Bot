@@ -8,7 +8,7 @@ $serverPort = $_GET['server_port'];
 $id = $_GET['id'];
 $apiClient = new WireGuardAPI('http://'.$serverPort, $token);
 header('Content-Type: text/plain');
-header('Content-Disposition: attachment; filename="vpn.conf"');
+header('Content-Disposition: inline; filename="vpn.conf"');
 $clientConf = $apiClient->getClientById($id, 'conf');
 echo $clientConf;
 ?>
