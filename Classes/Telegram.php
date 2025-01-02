@@ -39,6 +39,7 @@ class Telegram
             $callbackQuery = self::$data['callback_query'];
             $chatId = $callbackQuery['message']['chat']['id'];
             $callbackData = $callbackQuery['data'];
+            Logger::Rec(print_r(print_r(self::$data, true)));
             self::sendMessage("Выбран ".$callbackData);
         }
         if (empty(self::$data['message']['chat']['id'])) {
