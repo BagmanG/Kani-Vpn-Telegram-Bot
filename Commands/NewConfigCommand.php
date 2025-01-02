@@ -9,7 +9,7 @@ class NewConfigCommand extends Command {
         $inlineKeyboard = [];
         foreach ($servers as $server) {
             $inlineKeyboard['inline_keyboard'][] = [
-                ['text' => $server['name'], 'callback_data' => 'buy' . $server['id']],
+                ['text' => $server['name'], 'callback_data' => 'new_config_' . $server['id']],
             ];
         }
         Telegram::sendInlineMessage("Выберите страну для VPN:",$inlineKeyboard);
