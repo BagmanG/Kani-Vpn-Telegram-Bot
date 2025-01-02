@@ -56,9 +56,7 @@ class Telegram
             self::tryParseCallback(self::$data['callback_query']['data']);
             return;
         }
-        if (empty(self::$data['message']['chat']['id'])) {
-            exit();
-        }
+    
         //Если сообщение, то обрабатываем
         if (!empty(self::$data['message']['text'])) {
             $text = self::$data['message']['text'];
