@@ -4,17 +4,11 @@ class WireGuardManager
     public static function CreateNewConfig($serverId)
     {
         $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
-        Telegram::sendMessage("1");
         $api = new WireGuardAPI('http://'.$server['ip'].':'.$server['port'], $server['api_key']);
-        Telegram::sendMessage("2");
         $json = $api->createClient();
-        Telegram::sendMessage("3");
         $data = json_decode($json, true);
-        Telegram::sendMessage("4");
         $configId = $data['id'];
-        Telegram::sendMessage("5");
         $userId = Telegram::getUserId();
-        Telegram::sendMessage("6");
         $createdDate = date('Y-m-d H:i:s');
         Telegram::sendMessage("Ваша конфигурация успешно создана!");
         $configIndex = Database::queryWithIndex("INSERT INTO `configs`(`id`, `userId`, `serverId`, `created_date`, `configId`) VALUES (0,'$userId',$serverId,'$createdDate',$configId)");

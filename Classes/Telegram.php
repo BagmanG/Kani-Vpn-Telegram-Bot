@@ -38,6 +38,7 @@ class Telegram
 
         //Если каллбек, то парсим
         if (isset(self::$data['callback_query'])) {
+            Logger::Rec(self::$data);
             self::tryParseCallback(self::$data['callback_query']['data']);
             return;
         }
@@ -122,7 +123,7 @@ class Telegram
 
     public static function getUserId(): string
     {
-        return self::$data['message']['from']['id'];
+        return isset(self::$data['message']['from']['id']) ? self::$data['message']['from']['id'] : self::$data['callback_query']['from']['id'];
     }
 
     public static function getUserNickname(): string
@@ -141,7 +142,7 @@ class Telegram
         if (strpos($callbackData, 'new_config_') !== false) {
             preg_match('/new_config_(\d+)/', $callbackData, $matches);
             if (isset($matches[1])) {
-                WireGuardManager::CreateNewConfig($matches[1]);
+                //WireGuardManager::CreateNewConfig($matches[1]);
                 return;
             }
         }
