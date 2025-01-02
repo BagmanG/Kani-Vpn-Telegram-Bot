@@ -22,8 +22,8 @@ class DatabaseEventer
 
     public static function OnChangeUserState($state){
         $userId = Telegram::getUserId();
-        Database::execute("UPDATE `users` SET `state` = $state WHERE `userId` = $userId");
-        Telegram::sendMessage("UPDATE `users` SET `state` = '$state' WHERE `userId` = $userId");
+        Database::execute("UPDATE `users` SET `state` = '$state' WHERE `userId` = '$userId'");
+        Telegram::sendMessage("UPDATE `users` SET `state` = '$state' WHERE `userId` = '$userId'");
     }
 
     public static function ResetUserState(){
