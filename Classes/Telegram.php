@@ -37,6 +37,14 @@ class Telegram
         self::$data = json_decode(self::$data, true);
         $dataText = print_r(self::$data, true);
         Telegram::sendMessage($dataText);
+
+        if(isset(self::$data['message']['chat']['id'])){
+            if(self::$data['message']['chat']['id']==-1002176982830){
+                Telegram::sendMessage("О, вы написали что-то в беседу?");
+                return;
+            }
+        }
+
         //Если каллбек, то парсим
         if (isset(self::$data['callback_query'])) {
             Logger::Rec(self::$data);
