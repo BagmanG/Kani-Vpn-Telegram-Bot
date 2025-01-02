@@ -36,6 +36,7 @@ class WireGuardManager
         $serverData = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
         $fileUrl = $_ENV['SERVER_ROOT']."Plugins/WireGuard/WireGuardFile.php?server_port=".$serverData['ip'].":".$serverData['port']."&token=".$serverData['api_key']."&id=".$configId;
         $fileUrl = $_ENV['SERVER_ROOT']."test.jpg";
+        $fileUrl = curl_file_create($fileUrl, 'image/jpg' , 'cat.jpg');
         Telegram::sendMessage("Test ".$fileUrl);
         Telegram::sendDocument($fileUrl,"Файл конфигурации.");
     }
