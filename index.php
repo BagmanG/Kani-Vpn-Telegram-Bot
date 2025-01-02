@@ -13,6 +13,7 @@ Telegram::addCommand(new StartCommand("/start"));
 Telegram::addCommand(new HelpCommand("/help"));
 Telegram::addCommand(new TestCommand("/test"));
 Telegram::addCommand(new NewConfigCommand("/new"));
+Telegram::addCommand(new ConfigsListCommand("/vpns"));
 Telegram::run();
 
 Core::Close();
