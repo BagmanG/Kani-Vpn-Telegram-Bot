@@ -58,7 +58,7 @@ class Telegram
         }
         
         if (empty(self::$data['message']['chat']['id'])) {
-            exit();
+            return;
         }
 
         //Если сообщение, то обрабатываем
