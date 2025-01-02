@@ -81,16 +81,31 @@ class Telegram
         );
     }
 
-    public static function sendPhotoWithCaption($photoUrl, $caption)
+    public static function sendPhotoWithCaption($photoUrl, $caption = null)
     {
-        self::sendTelegram(
-            'sendPhoto',
-            array(
-                'chat_id' => self::getChatId(),
-                'photo' => $photoUrl,
-                'caption' => $caption,
-            )
+        $data = array(
+            'chat_id' => self::getChatId(),
+            'photo' => $photoUrl,
         );
+    
+        if (!empty($caption)) {
+            $data['caption'] = $caption;
+        }
+    
+        self::sendTelegram('sendPhoto', $data);
+    }
+
+    public static function sendDocument($filePath, $caption = null)
+    {
+        $data = array(
+            'chat_id' => self::getChatId(),
+            'document' => $filePath,
+        );
+        if ($caption) {
+            $data['caption'] = $caption;
+        }
+
+        self::sendTelegram('sendDocument', $data);
     }
 
     public static function sendInlineMessage($message, $inlineKeyboard)
@@ -115,7 +130,8 @@ class Telegram
         return isset(self::$data['message']['from']['username']) ? self::$data['message']['from']['username'] : null;
     }
 
-    public static function getChatId():string{
+    public static function getChatId(): string
+    {
         return isset(self::$data['message']['chat']['id']) ? self::$data['message']['chat']['id'] : self::$data['callback_query']['message']['chat']['id'];
     }
 
@@ -125,8 +141,7 @@ class Telegram
         if (strpos($callbackData, 'new_config_') !== false) {
             preg_match('/new_config_(\d+)/', $callbackData, $matches);
             if (isset($matches[1])) {
-                self::sendMessage("Test");
-                //WireGuardManager::CreateNewConfig($matches[1]);
+                WireGuardManager::CreateNewConfig($matches[1]);
                 return;
             }
         }
