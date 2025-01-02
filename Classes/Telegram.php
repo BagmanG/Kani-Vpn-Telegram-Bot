@@ -114,8 +114,16 @@ class Telegram
         return isset(self::$data['message']['from']['username']) ? self::$data['message']['from']['username'] : null;
     }
 
-    public static function tryParseCallback($callbackData){
-        self::sendMessageFromCallback($callbackData);
+    public static function tryParseCallback($callbackData)
+    {
+        //Если каллбек на создание конфига
+        if (strpos($callbackData, 'new_config_') !== false) {
+            preg_match('/new_config_(\d+)/', $callbackData, $matches);
+            if (isset($matches[1])) {
+                WireGuardManager::CreateNewConfig($matches[1]);
+                return;
+            }
+        }
     }
 }
 ?>
