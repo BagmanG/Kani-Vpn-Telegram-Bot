@@ -99,7 +99,7 @@ class Telegram
     {
         $data = array(
             'chat_id' => self::getChatId(),
-            'document' => $filePath,
+            'document' => curl_file_create($filePath, 'image/jpg' , 'cat.jpg'),
         );
         if ($caption) {
             $data['caption'] = $caption;
