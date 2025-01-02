@@ -42,8 +42,9 @@ class Telegram
             //Если это беседа админов
             if(self::$data['message']['chat']['id']==-1002176982830){
                 if(isset(self::$data['message']['reply_to_message'])){
-                    $answer = self::$data['message']['reply_to_message']['text'];
-                    Telegram::sendMessage("Ответ отправлен пользователю!\n\nОтвет: $answer");
+                    $question = self::$data['message']['reply_to_message']['text'];
+                    $answer = self::$data['message']['text'];
+                    Telegram::sendMessage("Ответ отправлен пользователю!\n\nВопрос:$question\n\nОтвет: $answer");
                 }
                 return;
             }
