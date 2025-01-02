@@ -35,7 +35,8 @@ class Telegram
     {
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
-        self::sendMessage("Пришел запрос:".print_r(self::$data, true));
+        Logger::Rec('Пришел ответ: '. print_r(self::$data, true));
+        //self::sendMessage("Пришел запрос:".print_r(self::$data, true));
         // if (isset(self::$data['callback_query'])) {
         //     $callbackQuery = self::$data['callback_query'];
         //     $chatId = $callbackQuery['message']['chat']['id'];
