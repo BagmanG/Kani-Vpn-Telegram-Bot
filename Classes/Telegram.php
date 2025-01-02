@@ -35,13 +35,10 @@ class Telegram
     {
         self::$data = file_get_contents('php://input');
         self::$data = json_decode(self::$data, true);
-        Logger::Rec(print_r(self::$data, true));
         if (isset(self::$data['callback_query'])) {
             $callbackQuery = self::$data['callback_query'];
-            $chatId = $callbackQuery['message']['chat']['id'];
             $callbackData = $callbackQuery['data'];
-            Logger::Rec(print_r(self::$data, true));
-            self::sendMessage("Выбран ".$callbackData);
+            self::sendMessageFromCallback("Выбран ".$callbackData);
         }
         if (empty(self::$data['message']['chat']['id'])) {
             exit();
@@ -77,6 +74,17 @@ class Telegram
             'sendMessage',
             array(
                 'chat_id' => self::$data['message']['chat']['id'],
+                'text' => $message,
+            )
+        );
+    }
+
+    public static function sendMessageFromCallback($message)
+    {
+        self::sendTelegram(
+            'sendMessage',
+            array(
+                'chat_id' => self::$data['callback_query']['message']['chat']['id'],
                 'text' => $message,
             )
         );
