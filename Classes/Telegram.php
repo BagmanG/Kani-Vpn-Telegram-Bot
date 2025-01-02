@@ -44,7 +44,10 @@ class Telegram
                 if(isset(self::$data['message']['reply_to_message'])){
                     $question = self::$data['message']['reply_to_message']['text'];
                     $answer = self::$data['message']['text'];
-                    Telegram::sendMessage("Ответ отправлен пользователю!\n\nВопрос:$question\n\nОтвет: $answer");
+                    $lines = explode("\n", $question);
+                    $userId = $lines[0];
+                    Telegram::sendToSupportChat("Ответ отправлен пользователю!\n\nВопрос:$question\n\nОтвет: $answer");
+                    self::sendMessageWithChatId("Ответ от поддержки:\n\n".$answer,$userId);
                 }
                 return;
             }
@@ -179,6 +182,16 @@ class Telegram
             'sendMessage',
             array(
                 'chat_id' => $_ENV['SUPPORT_CHAT_ID'],
+                'text' => $message,
+            )
+        );
+    }
+
+    public static function sendMessageWithChatId($message,$chatId){
+        self::sendTelegram(
+            'sendMessage',
+            array(
+                'chat_id' => $chatId,
                 'text' => $message,
             )
         );
