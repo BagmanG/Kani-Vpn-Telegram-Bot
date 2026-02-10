@@ -6,7 +6,7 @@ class TestCommand extends Command {
  
     public function run() { 
         DatabaseEventer::ResetUserState();
-        Telegram::sendMessage("Test : ");
+        Telegram::sendMessage("душевно в душу!!!");
     }
 }
 ?> 

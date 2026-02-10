@@ -10,7 +10,7 @@ class WireGuardManager
         $configId = $data['id'];
         $userId = Telegram::getUserId();
         $createdDate = date('Y-m-d H:i:s');
-        Telegram::sendMessage("Ваша конфигурация успешно создана!");
+        Telegram::sendMessage("Ваша конфигурация успешно создана!"); 
         $configIndex = Database::queryWithIndex("INSERT INTO `configs`(`id`, `userId`, `serverId`, `created_date`, `configId`) VALUES (0,'$userId',$serverId,'$createdDate',$configId)");
         self::GetConfigQrCode($configIndex);
         self::GetConfigFile($configIndex);
