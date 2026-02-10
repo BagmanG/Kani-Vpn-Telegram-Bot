@@ -172,30 +172,9 @@ class Telegram
         if (strpos($callbackData, 'new_config_') !== false) {
             preg_match('/new_config_(\d+)/', $callbackData, $matches);
             if (isset($matches[1])) {
-                $serverId = $matches[1];
-                // Проверяем, нужно ли подтверждение
-                if (WireGuardManager::CheckBeforeCreate($serverId)) {
-                    // Если подтверждение не нужно - создаем сразу
-                    WireGuardManager::CreateNewConfig($serverId);
-                }
-                // Иначе CheckBeforeCreate уже отправил сообщение с кнопками подтверждения
-                return;
-            }
-        }
-        
-        //Если каллбек на подтверждение создания конфига
-        if (strpos($callbackData, 'confirm_new_config_') !== false) {
-            preg_match('/confirm_new_config_(\d+)/', $callbackData, $matches);
-            if (isset($matches[1])) {
                 WireGuardManager::CreateNewConfig($matches[1]);
                 return;
             }
-        }
-        
-        //Если каллбек на отмену создания конфига
-        if ($callbackData === 'cancel_new_config') {
-            Telegram::sendMessage("❌ Создание конфигурации отменено.");
-            return;
         }
     }
 
