@@ -176,6 +176,40 @@ class Telegram
                 return;
             }
         }
+        
+        //Если каллбек на подтверждение удаления старых конфигураций
+        if (strpos($callbackData, 'confirm_delete_old_') !== false) {
+            preg_match('/confirm_delete_old_(\d+)/', $callbackData, $matches);
+            if (isset($matches[1])) {
+                DatabaseEventer::ResetUserState();
+                WireGuardManager::createConfigAndSend($matches[1], true);
+                return;
+            }
+        }
+        
+        //Если каллбек на отмену удаления
+        if ($callbackData === 'cancel_delete') {
+            DatabaseEventer::ResetUserState();
+            self::sendMessage("❌ Операция отменена. Ваши конфигурации сохранены.");
+            return;
+        }
+        
+        //Если каллбек на удаление конкретной конфигурации
+        if (strpos($callbackData, 'delete_config_') !== false) {
+            preg_match('/delete_config_(\d+)/', $callbackData, $matches);
+            if (isset($matches[1])) {
+                $configId = $matches[1];
+                $configData = Database::fetch("SELECT c.configId, c.serverId, s.name as server_name 
+                                               FROM configs c 
+                                               JOIN servers s ON c.serverId = s.id 
+                                               WHERE c.id = $configId");
+                if ($configData) {
+                    WireGuardManager::DeleteConfig($configId, $configData['configId'], $configData['serverId']);
+                    self::sendMessage("✅ Конфигурация '" . $configData['server_name'] . "' успешно удалена!");
+                }
+                return;
+            }
+        }
     }
 
     public static function sendToSupportChat($message){

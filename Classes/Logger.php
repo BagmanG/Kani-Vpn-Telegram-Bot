@@ -8,5 +8,9 @@ class Logger {
         $logMessage = "[$timestamp] $message" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
     }
+    
+    public static function log($message) {
+        self::Rec($message);
+    }
 }
 ?>
