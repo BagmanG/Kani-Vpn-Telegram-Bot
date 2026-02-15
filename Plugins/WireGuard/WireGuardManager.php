@@ -1,8 +1,19 @@
 <?
 class WireGuardManager
 {
+    public static function CanCreateConfig():bool{
+        //SELECT COUNT(*) FROM `configs` WHERE userId = 417042454   
+        $userId = Telegram::getUserId();
+        $count = Database::fetch("SELECT COUNT(*) as cnt FROM `configs` WHERE userId = $userId").["cnt"];
+        Telegram::sendMessage("У вас конфингов $count"); 
+        return true;
+    }
+
     public static function CreateNewConfig($serverId)
-    {
+    {   
+        if(self::CanCreateConfig() == true){
+            return;
+        }
         $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
         $api = new WireGuardAPI('http://'.$server['ip'].':'.$server['port'], $server['api_key']);
         $json = $api->createClient();
