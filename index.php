@@ -14,6 +14,7 @@ Telegram::addCommand(new HelpCommand("/help"));
 Telegram::addCommand(new TestCommand("от души!"));
 Telegram::addCommand(new NewConfigCommand("/new"));
 Telegram::addCommand(new ConfigsListCommand("/vpns"));
+Telegram::addCommand(new FAQCommand("/faq"));
 Telegram::run();
 
 Core::Close();
