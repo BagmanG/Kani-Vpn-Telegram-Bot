@@ -2,18 +2,17 @@
 class WireGuardManager
 {
     public static function CanCreateConfig():bool{
-        //SELECT COUNT(*) FROM `configs` WHERE userId = 417042454   
         $userId = Telegram::getUserId();
         $result = Database::query("SELECT COUNT(*) as cnt FROM `configs` WHERE userId = $userId");
         $row = $result->fetch_assoc();
         $count = $row['cnt'];
-        Telegram::sendMessage("У вас конфингов $count"); 
-        return true;
+        return $count < 2;
     }
 
     public static function CreateNewConfig($serverId)
     {   
-        if(self::CanCreateConfig() == true){
+        if(self::CanCreateConfig() == false){
+            Telegram::sendMessage("Вы можете создать не более двух конфигураций."); 
             return;
         }
         $server = Database::fetch("SELECT id,ip,port,api_key FROM servers WHERE id = $serverId");
