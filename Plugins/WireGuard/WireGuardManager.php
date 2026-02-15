@@ -4,7 +4,9 @@ class WireGuardManager
     public static function CanCreateConfig():bool{
         //SELECT COUNT(*) FROM `configs` WHERE userId = 417042454   
         $userId = Telegram::getUserId();
-        $count = Database::fetch("SELECT COUNT(*) as cnt FROM `configs` WHERE userId = $userId").["cnt"];
+        $result = Database::query("SELECT COUNT(*) as cnt FROM `configs` WHERE userId = $userId");
+        $row = $result->fetch_assoc();
+        $count = $row['cnt'];
         Telegram::sendMessage("У вас конфингов $count"); 
         return true;
     }
